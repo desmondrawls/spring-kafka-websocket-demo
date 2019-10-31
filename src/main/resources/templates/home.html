@@ -89,7 +89,7 @@
 			});
 		});
 		setInterval(function() {
-			stompClient.send("/temperature", {}, 55);
+			stompClient.send("/topic/ws-temperature", {}, 55);
 		}, 2000)
 	});
 </script>

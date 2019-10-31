@@ -13,7 +13,7 @@ public class Thermostat {
   @Autowired
   private KafkaTemplate<String, String> kafkaTemplate;
 
-  @MessageMapping("/temperature")
+  @MessageMapping("/topic/ws-temperature")
   public void record(int temperature) throws Exception {
     Thread.sleep(1000);
     kafkaTemplate.send("temperature", Integer.toString(temperature));
