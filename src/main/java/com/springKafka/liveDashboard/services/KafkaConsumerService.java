@@ -14,6 +14,7 @@ public class KafkaConsumerService{
 	
 	@KafkaListener(topics="${kafka.topic}")
 	public void consume(@Payload String message) {
-			template.convertAndSend("/topic/temperature", message);
+
+			template.convertAndSend("/topic/ws-temperature", message);
 	}
 }
