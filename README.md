@@ -11,3 +11,5 @@ Setting up Kafka
 1. ./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties
 1. ./bin/kafka-server-start ./etc/kafka/server.properties
 1. ./bin/control-center-start ./etc/confluent-control-center/control-center.properties
+
+[docker quick start](https://docs.confluent.io/current/quickstart/ce-docker-quickstart.html)
