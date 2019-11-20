@@ -3,8 +3,13 @@ package com.springKafka.liveDashboard.configurations;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.springKafka.liveDashboard.temperature.Reading;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,19 +30,24 @@ public class KafkaConsumerConfig {
 		Map<String,Object> props=new HashMap<String,Object>();
 		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
 		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, "temp-groupid.group");
 		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
 		
 		return props;
 	}
+
 	@Bean
-	public ConsumerFactory<String, String> consumerFactory(){
-		return new DefaultKafkaConsumerFactory<>(consumerConfigs());
+	public ConsumerFactory<String, Reading> consumerFactory() {
+		return new DefaultKafkaConsumerFactory<>(consumerConfigs(), new StringDeserializer(),
+						new JsonDeserializer<>(Reading.class));
 	}
+
 	@Bean
-	public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String,String>> kafkaListenerContainerFactory(){
-		ConcurrentKafkaListenerContainerFactory<String, String> factory=new ConcurrentKafkaListenerContainerFactory();
+	public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String,Reading>> kafkaListenerContainerFactory(){
+		ConcurrentKafkaListenerContainerFactory<String, Reading> factory=new ConcurrentKafkaListenerContainerFactory();
 		factory.setConsumerFactory(consumerFactory());
 		return factory;
 		
