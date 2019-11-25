@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @EnableBinding(Sink.class)
-public class KafkaConsumerService{
+public class StreamConnector {
 	
 	@Autowired
 	SimpMessagingTemplate template;
