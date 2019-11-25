@@ -77,7 +77,7 @@
 		var socket = new SockJS('/live-temperature');
 		stompClient = Stomp.over(socket);
 		stompClient.connect({}, function(frame) {
-			stompClient.subscribe('/topic/ws-temperature', function(temperature) {
+			stompClient.subscribe('/topic/ws-temperature-sink', function(temperature) {
 				$('#temperature').text(temperature.body);
 				/* Push new data On X-Axis of Chart */
 				config.data.labels.push(new Date());
@@ -89,7 +89,7 @@
 			});
 		});
 		setInterval(function() {
-			stompClient.send("/topic/ws-temperature", {}, 70 + Math.floor(Math.random() * 10));
+			stompClient.send("/topic/ws-temperature-source", {}, 70 + Math.floor(Math.random() * 10));
 		}, 2000)
 	});
 </script>

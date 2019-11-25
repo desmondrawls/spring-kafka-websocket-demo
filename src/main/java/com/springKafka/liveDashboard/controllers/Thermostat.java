@@ -15,7 +15,7 @@ public class Thermostat {
   @Autowired
   private KafkaTemplate<String, Reading> kafkaTemplate;
 
-  @MessageMapping("/topic/ws-temperature")
+  @MessageMapping("/topic/ws-temperature-source")
   public void record(int temperature) throws Exception {
     Thread.sleep(1000);
     System.out.println("recording: " + temperature);
