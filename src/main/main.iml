@@ -15,5 +15,6 @@
     <orderEntry type="library" name="Gradle: org.apache.kafka:kafka-clients:2.3.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-websocket:5.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-web:5.2.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.kafka:kafka-streams:2.3.0" level="project" />
   </component>
 </module>
