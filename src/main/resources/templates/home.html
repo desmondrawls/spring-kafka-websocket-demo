@@ -87,10 +87,16 @@
 				});
 				window.myLine.update();
 			});
+			stompClient.subscribe('/topic/ws-temperature-sink-2', function(temperature) {
+				$('#hot').text("HOT: " + temperature.body);
+			});
 		});
 		setInterval(function() {
 			stompClient.send("/topic/ws-temperature-source", {}, 70 + Math.floor(Math.random() * 10));
 		}, 2000)
+		setInterval(function() {
+			stompClient.send("/topic/ws-temperature-source-hot", {}, 70 + Math.floor(Math.random() * 10));
+		}, 2222)
 	});
 </script>
 </head>
@@ -110,8 +116,9 @@
 					</div>
 				</div>
 			</div>
+			<br>
+			<div id="hot"></div>
 		</div>
 	</div>
-
 </body>
 </html>

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @EnableBinding(Sink.class)
-public class StreamConnector {
+public class StreamSink {
 	
 	@Autowired
 	SimpMessagingTemplate template;
