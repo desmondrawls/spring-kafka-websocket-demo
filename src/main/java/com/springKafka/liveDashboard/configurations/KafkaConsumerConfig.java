@@ -1,5 +1,7 @@
 package com.springKafka.liveDashboard.configurations;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +9,7 @@ import com.springKafka.liveDashboard.temperature.Reading;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
@@ -17,8 +20,10 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
-import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
+import reactor.kafka.receiver.KafkaReceiver;
+import reactor.kafka.receiver.ReceiverOptions;
+import reactor.kafka.receiver.internals.DefaultKafkaReceiver;
 
 @EnableKafka
 @Configuration
@@ -51,5 +56,10 @@ public class KafkaConsumerConfig {
 		factory.setConsumerFactory(consumerFactory());
 		return factory;
 		
+	}
+
+	@Bean
+	public KafkaReceiver<Object, Object> kafkaReceiver() {
+		return KafkaReceiver.create(ReceiverOptions.create(consumerConfigs()).subscription(Collections.singleton("temperature")));
 	}
 }
