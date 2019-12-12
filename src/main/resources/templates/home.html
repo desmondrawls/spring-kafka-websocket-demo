@@ -98,6 +98,9 @@
 			stompClient.send("/topic/ws-temperature-source", {}, 70 + Math.floor(Math.random() * 10));
 		}, 2000)
 		setInterval(function() {
+			stompClient.send("/topic/ws-temperature-source-webflux", {}, 700 + Math.floor(Math.random() * 10));
+		}, 1500)
+		setInterval(function() {
 			stompClient.send("/topic/ws-temperature-source-kinda-hot", {}, 70 + Math.floor(Math.random() * 10));
 		}, 2222)
 	});
